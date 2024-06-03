@@ -1,0 +1,228 @@
+---
+$puppetdb::globals::version: "present"
+
+puppetdb::listen_address: "localhost"
+puppetdb::listen_port: "8080"
+puppetdb::disable_cleartext: false
+puppetdb::open_listen_port: false
+puppetdb::ssl_listen_address: "0.0.0.0"
+puppetdb::ssl_listen_port: "8081"
+puppetdb::ssl_protocols: ~ # undef
+puppetdb::disable_ssl: false
+puppetdb::cipher_suites: ~ # undef
+puppetdb::open_ssl_listen_port: ~ # undef
+puppetdb::postgres_listen_addresses: "localhost"
+puppetdb::puppetdb_version: "%{alias('puppetdb::globals::version')}"
+puppetdb::manage_dbserver: true
+puppetdb::manage_database: true
+#if fact('os.family') not match /RedHat|Debian/
+puppetdb::manage_pg_repo: false
+puppetdb::postgres_version: "14"
+
+# # puppetdb::puppetdb_major_version: puppetdb::puppetdb_version ? {
+# #   'latest'  => '8',
+# #   'present' => '8',
+# #   default   => puppetdb::puppetdb_version.split('.')[0],
+# # }
+
+puppetdb::database_host: "localhost"
+puppetdb::database_port: "5432"
+puppetdb::database_name: "puppetdb"
+puppetdb::database_username: "puppetdb"
+puppetdb::database_password: "puppetdb"
+puppetdb::manage_db_password: true
+puppetdb::jdbc_ssl_properties: ""
+puppetdb::database_validate: true
+puppetdb::database_max_pool_size: ~ # undef
+puppetdb::puppetdb_server: "%{facts.networking.fqdn}"
+puppetdb::password_encryption: "scram-sha-256"
+
+# These settings manage the various auto-deactivation and auto-purge settings
+puppetdb::node_ttl: "7d"
+puppetdb::node_purge_ttl: "14d"
+puppetdb::report_ttl: "14d"
+
+puppetdb::facts_blacklist: ~ # undef
+
+puppetdb::gc_interval: "60"
+puppetdb::node_purge_gc_batch_limit: "25"
+
+puppetdb::conn_max_age: "60"
+puppetdb::conn_lifetime: "0"
+
+puppetdb::max_threads: ~ # undef
+puppetdb::migrate: true
+
+# These settings are for the read database
+puppetdb::read_database_host: ~ # undef
+puppetdb::read_database_port: "5432"
+puppetdb::read_database_name: "puppetdb"
+puppetdb::read_database_username: "puppetdb-read"
+puppetdb::read_database_password: "puppetdb-read"
+puppetdb::manage_read_db_password: true
+puppetdb::read_database_jdbc_ssl_properties: ""
+puppetdb::read_database_validate: true
+puppetdb::read_conn_max_age: "60"
+puppetdb::read_conn_lifetime: "0"
+puppetdb::read_database_max_pool_size: ~ # undef
+
+puppetdb::manage_firewall: true
+puppetdb::java_args: {}
+puppetdb::merge_default_java_args: true
+
+puppetdb::puppetdb_service: "puppetdb"
+puppetdb::masterless: false
+
+# # Temp Code For Common Pulled from Conditional Block
+# # if !(puppetdb::puppetdb_version in ['latest','present','absent']) and versioncmp(puppetdb::puppetdb_version, '3.0.0') < 0 {
+# #   case fact('os.family') {
+# #     'RedHat', 'Suse', 'Archlinux','Debian': {
+# #       puppetdb::puppetdb_package: 'puppetdb'
+# #       puppetdb::terminus_package: 'puppetdb-terminus'
+# #       puppetdb::etcdir: '/etc/puppetdb'
+# #       puppetdb::vardir: '/var/lib/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::globals::puppet_confdir,'/etc/puppet')
+# #       puppetdb::puppet_service_name: 'puppetmaster'
+# #     }
+# #     'OpenBSD': {
+# #       puppetdb::puppetdb_package: 'puppetdb'
+# #       puppetdb::terminus_package: 'puppetdb-terminus'
+# #       puppetdb::etcdir: '/etc/puppetdb'
+# #       puppetdb::vardir: '/var/db/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::globals::puppet_confdir,'/etc/puppet')
+# #       puppetdb::puppet_service_name: 'puppetmasterd'
+# #     }
+# #     'FreeBSD': {
+# #       puppetdb::puppetdb_package: inline_epp('puppetdb<%= puppetdb::puppetdb::params::puppetdb_major_version %>')
+# #       puppetdb::terminus_package: inline_epp('puppetdb-terminus<%= puppetdb::puppetdb::params::puppetdb_major_version %>')
+# #       puppetdb::etcdir: '/usr/local/etc/puppetdb'
+# #       puppetdb::vardir: '/var/db/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::globals::puppet_confdir,'/usr/local/etc/puppet')
+# #       puppetdb::puppet_service_name: 'puppetmaster'
+# #     }
+# #     default: {
+# #       fail("The fact 'os.family' is set to puppetdb::{fact('os.family')} which is not supported by the puppetdb module.")
+# #     }
+# #   }
+# #   puppetdb::test_url: '/v3/version'
+# # } else {
+# #   case fact('os.family') {
+# #     'RedHat', 'Suse', 'Archlinux','Debian': {
+# #       puppetdb::puppetdb_package: 'puppetdb'
+# #       puppetdb::terminus_package: 'puppetdb-termini'
+# #       puppetdb::etcdir: '/etc/puppetlabs/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::globals::puppet_confdir,'/etc/puppetlabs/puppet')
+# #       puppetdb::puppet_service_name: 'puppetserver'
+# #       puppetdb::vardir: '/opt/puppetlabs/server/data/puppetdb'
+# #     }
+# #     'OpenBSD': {
+# #       puppetdb::puppetdb_package: 'puppetdb'
+# #       puppetdb::terminus_package: 'puppetdb-termini'
+# #       puppetdb::etcdir: '/etc/puppetlabs/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::puppetdb::globals::puppet_confdir,'/etc/puppetlabs/puppet')
+# #       puppetdb::puppet_service_name: ~ # undef
+# #       puppetdb::vardir: '/opt/puppetlabs/server/data/puppetdb'
+# #     }
+# #     'FreeBSD': {
+# #       puppetdb::puppetdb_package: inline_epp('puppetdb<%= puppetdb::puppetdb::params::puppetdb_major_version %>')
+# #       puppetdb::terminus_package: inline_epp('puppetdb-terminus<%= puppetdb::puppetdb::params::puppetdb_major_version %>')
+# #       puppetdb::etcdir: '/usr/local/etc/puppetdb'
+# #       puppetdb::puppet_confdir: pick(puppetdb::puppetdb::globals::puppet_confdir,'/usr/local/etc/puppet')
+# #       puppetdb::puppet_service_name: 'puppetserver'
+# #       puppetdb::vardir: '/var/db/puppetdb'
+# #     }
+# #     default: {
+# #       fail("The fact 'os.family' is set to puppetdb::{fact('os.family')} which is not supported by the puppetdb module.")
+# #     }
+# #   }
+# #   puppetdb::test_url: '/pdb/meta/v1/version'
+# # }
+
+# puppetdb::confdir: "%{puppetdb::params::etcdir}/conf.d"
+# puppetdb::ssl_dir: "%{puppetdb::params::etcdir}/ssl"
+# # puppetdb::confdir: "%{lookup('puppetdb::etcdir'}/conf.d"
+# # puppetdb::ssl_dir: "%{lookup('puppetdb::etcdir'}/ssl"
+
+puppetdb::puppetdb_user: "puppetdb"
+puppetdb::puppetdb_group: "puppetdb"
+puppetdb::puppetdb_initconf: ~ # undef
+
+# puppetdb::puppet_conf: "%{puppetdb::params::etcdir}/puppet.conf"
+# # puppetdb::puppet_conf: "%{lookup('puppetdb::puppet_confdir')}/puppet.conf"
+puppetdb::puppetdb_startup_timeout: 120
+puppetdb::puppetdb_service_status: "running"
+
+puppetdb::command_threads: ~ # undef
+puppetdb::concurrent_writes: ~ # undef
+puppetdb::store_usage: ~ # undef
+puppetdb::temp_usage: ~ # undef
+puppetdb::disable_update_checking: ~ # undef
+
+# # reports of failed actions: https://puppet.com/docs/puppetdb/5.2/maintain_and_tune.html#clean-up-the-dead-letter-office
+puppetdb::automatic_dlo_cleanup: true
+# any value for a systemd timer is valid: https://www.freedesktop.org/software/systemd/man/systemd.time.html
+# TODO: Identify method to set rand for param
+# puppetdb::cleanup_timer_interval: "*-*-* ${fqdn_rand(24)}:${fqdn_rand(60)}:00"
+puppetdb::dlo_max_age: 90
+
+# # certificats used for PostgreSQL SSL configuration. Puppet certificates are used
+puppetdb::postgresql_ssl_on: false
+# # puppetdb::postgresql_ssl_folder: "%{lookup('puppetdb::puppet_confdir')}/ssl"
+# # puppetdb::postgresql_ssl_cert_path: "%{lookup('puppetdb::postgresql_ssl_folder')}/certs/%{trusted.certname}.pem"
+# # puppetdb::postgresql_ssl_key_path: "%{lookup('puppetdb::postgresql_ssl_folder')}/private_keys/%{trusted.certname}.pem"
+# # puppetdb::postgresql_ssl_ca_cert_path: "%{lookup('puppetdb::postgresql_ssl_folder')}/certs/ca.pem"
+# puppetdb::postgresql_ssl_folder: "%{puppetdb::params::puppet_confdir}/ssl"
+# puppetdb::postgresql_ssl_cert_path: "%{puppetdb::params::postgresql_ssl_folder}/certs/%{trusted.certname}.pem"
+# puppetdb::postgresql_ssl_key_path: "%{puppetdb::params::postgresql_ssl_folder}/private_keys/%{trusted.certname}.pem"
+# puppetdb::postgresql_ssl_ca_cert_path: "%{puppetdb::params::postgresql_ssl_folder}/certs/ca.pem"
+
+# # certificats used for Jetty configuration
+puppetdb::ssl_set_cert_paths: false
+# # puppetdb::ssl_cert_path: "%{lookup('puppetdb::ssl_dir')}/public.pem"
+# # puppetdb::ssl_key_path: "%{lookup('puppetdb::ssl_dir')}/private.pem"
+# # puppetdb::ssl_ca_cert_path: "%{lookup('puppetdb::ssl_dir')}/ca.pem"
+# puppetdb::ssl_cert_path: "%{puppetdb::params::ssl_dir}/public.pem"
+# puppetdb::ssl_key_path: "%{puppetdb::params::ssl_dir}/private.pem"
+# puppetdb::ssl_ca_cert_path: "%{puppetdb::params::ssl_dir}/ca.pem"
+puppetdb::ssl_deploy_certs: false
+puppetdb::ssl_key: ~ # undef
+puppetdb::ssl_cert: ~ # undef
+puppetdb::ssl_ca_cert: ~ # undef
+
+# # certificate used by PuppetDB SSL Configuration
+# puppetdb::ssl_key_pk8_path: regsubst($ssl_key_path, '.pem', '.pk8')
+
+# puppetdb::certificate_whitelist_file: "%{puppetdb::params::etcdir}/certificate-whitelist"
+# # puppetdb::certificate_whitelist_file: "%{lookup('puppetdb::etcdir')}/certificate-whitelist"
+# # the default is free access for now
+puppetdb::certificate_whitelist: []
+# # change to this to only allow access by the puppet master by default:
+# #puppetdb::certificate_whitelist: [ $::servername ]
+
+# # Get the parameter name for the database connection pool tuning
+# # if $puppetdb_version in ['latest','present'] or versioncmp($puppetdb_version, '4.0.0') >= 0 {
+# #   puppetdb::database_max_pool_size_setting_name: 'maximum-pool-size'
+# # } elsif versioncmp($puppetdb_version, '2.8.0') >= 0 {
+# #   puppetdb::database_max_pool_size_setting_name: 'partition-conn-max'
+# # } else {
+# #   puppetdb::database_max_pool_size_setting_name: ~ # undef
+# # }
+
+# # java binary path for PuppetDB. If undef, default will be used.
+puppetdb::java_bin: ~ # undef
+
+
+
+# The following keys support the spec tests for puppetdb::server::command_processing
+# puppetdb::server::command_processing
+# puppetdb::server::command_processing::confdir: "%{alias('puppetdb::confdir')}"
+puppetdb::server::command_processing::command_threads: "%{alias('puppetdb::command_threads')}"
+puppetdb::server::command_processing::concurrent_writes: "%{alias('puppetdb::concurrent_writes')}"
+puppetdb::server::command_processing::store_usage: "%{alias('puppetdb::store_usage')}"
+puppetdb::server::command_processing::temp_usage: "%{alias('puppetdb::temp_usage')}"
+
+# 
+puppetdb::server::firewall::http_port: "%{alias('puppetdb::listen_port')}"
+puppetdb::server::firewall::open_http_port: "%{alias('puppetdb::open_listen_port')}"
+puppetdb::server::firewall::ssl_port: "%{alias('puppetdb::ssl_listen_port')}"
+puppetdb::server::firewall::open_ssl_port: "%{alias('puppetdb::open_ssl_listen_port')}"
