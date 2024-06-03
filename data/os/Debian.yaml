@@ -1,0 +1,7 @@
+---
+
+# if 'os.family' =~ /RedHat|Debian/
+puppetdb::manage_pg_repo: true
+puppetdb::puppetdb_user: 'puppetdb'
+puppetdb::puppetdb_group: 'puppetdb'
+puppetdb::puppetdb_initconf: '/etc/sysconfig/puppetdb'

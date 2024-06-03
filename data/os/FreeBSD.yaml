@@ -1,0 +1,5 @@
+---
+
+puppetdb::puppetdb_user: 'puppetdb'
+puppetdb::puppetdb_group: 'puppetdb'
+puppetdb::puppetdb_initconf: ~ # undef
