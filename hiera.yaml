@@ -6,6 +6,8 @@ defaults:  # Used for any hierarchy level that omits these keys.
   data_hash: yaml_data  # Use the built-in YAML backend.
 
 hierarchy:
+  - name: 'params function'
+    data_hash: "puppetdb::params"
   - name: "osfamily/major release"
     paths:
         # Used to distinguish between Debian and Ubuntu
