@@ -211,25 +211,23 @@ puppetdb::certificate_whitelist: []
 # # java binary path for PuppetDB. If undef, default will be used.
 puppetdb::java_bin: ~ # undef
 
-
-
-# The following aliased keys are used by unit tests to obtain default values normally set on parent classes. 
+# The following aliased keys are used by unit tests to obtain default values normally set on parent classes.
 # These values were previously inherited via the params.pp class
-# Todo: Determine dynamic population of confdir based on existing params.pp logic 
+# Todo: Determine dynamic population of confdir based on existing params.pp logic
 # puppetdb::server::command_processing::confdir: "%{alias('puppetdb::confdir')}"
 puppetdb::server::command_processing::command_threads: "%{alias('puppetdb::command_threads')}"
 puppetdb::server::command_processing::concurrent_writes: "%{alias('puppetdb::concurrent_writes')}"
 puppetdb::server::command_processing::store_usage: "%{alias('puppetdb::store_usage')}"
 puppetdb::server::command_processing::temp_usage: "%{alias('puppetdb::temp_usage')}"
 
-# The following aliased keys are used by unit tests to obtain default values normally set on parent classes. 
+# The following aliased keys are used by unit tests to obtain default values normally set on parent classes.
 # These values were previously inherited via the params.pp class
 puppetdb::server::firewall::http_port: "%{alias('puppetdb::listen_port')}"
 puppetdb::server::firewall::open_http_port: "%{alias('puppetdb::open_listen_port')}"
 puppetdb::server::firewall::ssl_port: "%{alias('puppetdb::ssl_listen_port')}"
 puppetdb::server::firewall::open_ssl_port: "%{alias('puppetdb::open_ssl_listen_port')}"
 
-# The following aliased keys are used by unit tests to obtain default values normally set on parent classes. 
+# The following aliased keys are used by unit tests to obtain default values normally set on parent classes.
 # These values were previously inherited via the params.pp class
 puppetdb::server::jetty::listen_address: "%{alias('puppetdb::listen_address')}"
 puppetdb::server::jetty::listen_port: "%{alias('puppetdb::listen_port')}"
@@ -246,3 +244,35 @@ puppetdb::server::jetty::cipher_suites: "%{alias('puppetdb::cipher_suites')}"
 # puppetdb::server::jetty::confdir: "%{alias('puppetdb::confdir')}"
 puppetdb::server::jetty::max_threads: "%{alias('puppetdb::max_threads')}"
 puppetdb::server::jetty::puppetdb_group: "%{alias('puppetdb::puppetdb_group')}"
+
+puppetdb::database::postgresql::listen_addresses: "%{alias('puppetdb::database_host')}"
+puppetdb::database::postgresql::puppetdb_server: "%{alias('puppetdb::puppetdb_server')}"
+puppetdb::database::postgresql::database_name: "%{alias('puppetdb::database_name')}"
+puppetdb::database::postgresql::database_username: "%{alias('puppetdb::database_username')}"
+puppetdb::database::postgresql::database_password: "%{alias('puppetdb::database_password')}"
+puppetdb::database::postgresql::database_port: "%{alias('puppetdb::database_port')}"
+puppetdb::database::postgresql::manage_database: "%{alias('puppetdb::manage_database')}"
+puppetdb::database::postgresql::manage_server: "%{alias('puppetdb::manage_dbserver')}"
+puppetdb::database::postgresql::manage_package_repo: "%{alias('puppetdb::manage_pg_repo')}"
+puppetdb::database::postgresql::postgres_version: "%{alias('puppetdb::postgres_version')}"
+puppetdb::database::postgresql::postgresql_ssl_on: "%{alias('puppetdb::postgresql_ssl_on')}"
+puppetdb::database::postgresql::postgresql_ssl_key_path: "%{alias('puppetdb::params::postgresql_ssl_key_path')}"
+puppetdb::database::postgresql::postgresql_ssl_cert_path: "%{alias('puppetdb::params::postgresql_ssl_cert_path')}"
+puppetdb::database::postgresql::postgresql_ssl_ca_cert_path: "%{alias('puppetdb::params::postgresql_ssl_ca_cert_path')}"
+puppetdb::database::postgresql::read_database_username: "%{alias('puppetdb::read_database_username')}"
+puppetdb::database::postgresql::read_database_password: "%{alias('puppetdb::read_database_password')}"
+puppetdb::database::postgresql::read_database_host: "%{alias('puppetdb::read_database_host')}"
+puppetdb::database::postgresql::password_sensitive: false
+puppetdb::database::postgresql::password_encryption: "%{alias('puppetdb::password_encryption')}"
+
+puppetdb::database::ssl_configuration::database_name: "%{alias('puppetdb::database_name')}"
+puppetdb::database::ssl_configuration::database_username: "%{alias('puppetdb::database_username')}"
+puppetdb::database::ssl_configuration::read_database_username: "%{alias('puppetdb::read_database_username')}"
+puppetdb::database::ssl_configuration::read_database_host: "%{alias('puppetdb::read_database_host')}"
+puppetdb::database::ssl_configuration::database_port: "%{alias('puppetdb::database_port')}"
+puppetdb::database::ssl_configuration::puppetdb_server: "%{alias('puppetdb::puppetdb_server')}"
+puppetdb::database::ssl_configuration::postgres_version: "%{alias('puppetdb::postgres_version')}"
+puppetdb::database::ssl_configuration::postgresql_ssl_key_path: "%{alias('puppetdb::params::postgresql_ssl_key_path')}"
+puppetdb::database::ssl_configuration::postgresql_ssl_cert_path: "%{alias('puppetdb::params::postgresql_ssl_cert_path')}"
+puppetdb::database::ssl_configuration::postgresql_ssl_ca_cert_path: "%{alias('puppetdb::params::postgresql_ssl_ca_cert_path')}"
+puppetdb::database::ssl_configuration::create_read_user_rule: false
