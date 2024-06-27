@@ -79,39 +79,39 @@ class puppetdb::params inherits puppetdb::globals {
 
   $puppetdb_service     = 'puppetdb'
   $masterless           = false
-
-  if !($puppetdb_version in ['latest','present','absent']) and versioncmp($puppetdb_version, '3.0.0') < 0 {
-    case fact('os.family') {
-      'RedHat', 'Suse', 'Archlinux','Debian': {
-        $puppetdb_package       = 'puppetdb'
-        $terminus_package       = 'puppetdb-terminus'
-        $etcdir                 = '/etc/puppetdb'
-        $vardir                 = '/var/lib/puppetdb'
-        $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/etc/puppet')
-        $puppet_service_name    = 'puppetmaster'
-      }
-      'OpenBSD': {
-        $puppetdb_package       = 'puppetdb'
-        $terminus_package       = 'puppetdb-terminus'
-        $etcdir                 = '/etc/puppetdb'
-        $vardir                 = '/var/db/puppetdb'
-        $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/etc/puppet')
-        $puppet_service_name    = 'puppetmasterd'
-      }
-      'FreeBSD': {
-        $puppetdb_package       = inline_epp('puppetdb<%= $puppetdb::params::puppetdb_major_version %>')
-        $terminus_package       = inline_epp('puppetdb-terminus<%= $puppetdb::params::puppetdb_major_version %>')
-        $etcdir                 = '/usr/local/etc/puppetdb'
-        $vardir                 = '/var/db/puppetdb'
-        $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/usr/local/etc/puppet')
-        $puppet_service_name    = 'puppetmaster'
-      }
-      default: {
-        fail("The fact 'os.family' is set to ${fact('os.family')} which is not supported by the puppetdb module.")
-      }
-    }
-    $test_url         = '/v3/version'
-  } else {
+  # Comment: Removes support for legacy puppetdb expected filepaths (pre 3.0.0). This will streamline the params.pp class for modern puppetdb implementations.  
+  # if !($puppetdb_version in ['latest','present','absent']) and versioncmp($puppetdb_version, '3.0.0') < 0 {
+  #   case fact('os.family') {
+  #     'RedHat', 'Suse', 'Archlinux','Debian': {
+  #       $puppetdb_package       = 'puppetdb'
+  #       $terminus_package       = 'puppetdb-terminus'
+  #       $etcdir                 = '/etc/puppetdb'
+  #       $vardir                 = '/var/lib/puppetdb'
+  #       $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/etc/puppet')
+  #       $puppet_service_name    = 'puppetmaster'
+  #     }
+  #     'OpenBSD': {
+  #       $puppetdb_package       = 'puppetdb'
+  #       $terminus_package       = 'puppetdb-terminus'
+  #       $etcdir                 = '/etc/puppetdb'
+  #       $vardir                 = '/var/db/puppetdb'
+  #       $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/etc/puppet')
+  #       $puppet_service_name    = 'puppetmasterd'
+  #     }
+  #     'FreeBSD': {
+  #       $puppetdb_package       = inline_epp('puppetdb<%= $puppetdb::params::puppetdb_major_version %>')
+  #       $terminus_package       = inline_epp('puppetdb-terminus<%= $puppetdb::params::puppetdb_major_version %>')
+  #       $etcdir                 = '/usr/local/etc/puppetdb'
+  #       $vardir                 = '/var/db/puppetdb'
+  #       $puppet_confdir         = pick($puppetdb::globals::puppet_confdir,'/usr/local/etc/puppet')
+  #       $puppet_service_name    = 'puppetmaster'
+  #     }
+  #     default: {
+  #       fail("The fact 'os.family' is set to ${fact('os.family')} which is not supported by the puppetdb module.")
+  #     }
+  #   }
+  #   $test_url         = '/v3/version'
+  # } else {
     case fact('os.family') {
       'RedHat', 'Suse', 'Archlinux','Debian': {
         $puppetdb_package    = 'puppetdb'
@@ -142,7 +142,7 @@ class puppetdb::params inherits puppetdb::globals {
       }
     }
     $test_url               = '/pdb/meta/v1/version'
-  }
+  # }
 
   $confdir = "${etcdir}/conf.d"
   $ssl_dir = "${etcdir}/ssl"
@@ -172,7 +172,6 @@ class puppetdb::params inherits puppetdb::globals {
       fail("The fact 'os.family' is set to ${fact('os.family')} which is not supported by the puppetdb module.")
     }
   }
-
   $puppet_conf              = "${puppet_confdir}/puppet.conf"
   $puppetdb_startup_timeout = 120
   $puppetdb_service_status  = 'running'
