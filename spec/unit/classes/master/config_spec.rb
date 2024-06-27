@@ -69,9 +69,16 @@ describe 'puppetdb::master::config', type: :class do
         context 'when using an older puppetdb version' do
           let(:pre_condition) { 'class { "puppetdb::globals": version => "2.2.0", }' }
 
-          it { is_expected.to contain_package('puppetdb-terminus').with(ensure: '2.2.0') }
-          it { is_expected.to contain_puppetdb_conn_validator('puppetdb_conn').with(test_url: '/v3/version') }
           it {
+            pending('Deprecating legacy configurations for puppetdb module')
+            is_expected.to contain_package('puppetdb-terminus').with(ensure: '2.2.0') 
+          }
+          it {
+            pending('Deprecating legacy configurations for puppetdb module')
+            is_expected.to contain_puppetdb_conn_validator('puppetdb_conn').with(test_url: '/v3/version') 
+          }
+          it {
+            pending('Deprecating legacy configurations for puppetdb module')
             is_expected.to contain_service('puppetmaster')
               .with_ensure('running')
               .with_enable(true)

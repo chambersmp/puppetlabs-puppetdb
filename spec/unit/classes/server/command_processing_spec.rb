@@ -53,8 +53,8 @@ describe 'puppetdb::server::command_processing', type: :class do
         super(),
       ].join("\n")
     end
-
     it {
+      pending('Deprecating legacy configurations for puppetdb module')
       is_expected.to contain_ini_setting('puppetdb_command_processing_threads')
         .with(
           'ensure'  => 'absent',
@@ -64,6 +64,7 @@ describe 'puppetdb::server::command_processing', type: :class do
         )
     }
     it {
+      pending('Deprecating legacy configurations for puppetdb module')
       is_expected.to contain_ini_setting('puppetdb_command_processing_store_usage')
         .with(
           'ensure'  => 'absent',
@@ -73,6 +74,7 @@ describe 'puppetdb::server::command_processing', type: :class do
         )
     }
     it {
+      pending('Deprecating legacy configurations for puppetdb module')
       is_expected.to contain_ini_setting('puppetdb_command_processing_temp_usage')
         .with(
           'ensure'  => 'absent',

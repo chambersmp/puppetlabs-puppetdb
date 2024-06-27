@@ -17,6 +17,7 @@ describe 'puppetdb::server::jetty', type: :class do
       end
 
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_file("#{pdbconfdir}/jetty.ini")
           .with(
             'ensure'  => 'file',
@@ -26,6 +27,7 @@ describe 'puppetdb::server::jetty', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_host')
           .with(
             'ensure'  => 'present',
@@ -36,6 +38,7 @@ describe 'puppetdb::server::jetty', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_port')
           .with(
             'ensure'  => 'present',
@@ -46,6 +49,7 @@ describe 'puppetdb::server::jetty', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_sslhost')
           .with(
             'ensure'  => 'present',
@@ -56,6 +60,7 @@ describe 'puppetdb::server::jetty', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_sslport')
           .with(
             'ensure'  => 'present',

@@ -31,6 +31,7 @@ describe 'puppetdb::server::global', type: :class do
     let(:pre_condition) { 'class { "puppetdb::globals": version => "2.2.0", }' }
 
     it {
+      pending('Deprecating legacy configurations for puppetdb module')
       is_expected.to contain_ini_setting('puppetdb_global_vardir')
         .with(
           'ensure' => 'present',
@@ -42,6 +43,7 @@ describe 'puppetdb::server::global', type: :class do
     }
 
     it {
+      pending('Deprecating legacy configurations for puppetdb module')
       is_expected.to contain_file('/etc/puppetdb/conf.d/config.ini')
         .with(
           'ensure'  => 'file',

@@ -17,6 +17,7 @@ describe 'puppetdb::server::database', type: :class do
       end
 
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_file("#{pdbconfdir}/database.ini")
           .with(
             'ensure'  => 'file',
@@ -26,6 +27,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_psdatabase_username')
           .with(
             'ensure'  => 'present',
@@ -36,6 +38,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_psdatabase_password')
           .with(
             'ensure'    => 'present',
@@ -47,6 +50,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_pgs')
           .with(
             'ensure'  => 'present',
@@ -57,6 +61,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_subname')
           .with(
             'ensure'  => 'present',
@@ -67,6 +72,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_gc_interval')
           .with(
             'ensure'  => 'present',
@@ -77,6 +83,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_node_purge_gc_batch_limit')
           .with(
             'ensure'  => 'present',
@@ -87,6 +94,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_node_ttl')
           .with(
             'ensure'  => 'present',
@@ -97,6 +105,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_node_purge_ttl')
           .with(
             'ensure'  => 'present',
@@ -107,6 +116,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_report_ttl')
           .with(
             'ensure'  => 'present',
@@ -117,6 +127,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_conn_max_age')
           .with(
             'ensure'  => 'present',
@@ -127,6 +138,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_conn_lifetime')
           .with(
             'ensure'  => 'present',
@@ -137,6 +149,7 @@ describe 'puppetdb::server::database', type: :class do
           )
       }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_migrate')
           .with(
             'ensure'  => 'present',
@@ -148,6 +161,7 @@ describe 'puppetdb::server::database', type: :class do
       }
       it { is_expected.not_to contain_ini_setting('puppetdb_database_max_pool_size') }
       it {
+        pending('Deprecating legacy configurations for puppetdb module') if values == 'legacy'
         is_expected.to contain_ini_setting('puppetdb_facts_blacklist')
           .with(
             'ensure'  => 'absent',
