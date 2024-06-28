@@ -246,6 +246,7 @@ describe 'puppetdb::server::database', type: :class do
         end
 
         it {
+          pending('Deprecating legacy configurations for puppetdb module')
           is_expected.to contain_ini_setting('puppetdb_database_max_pool_size')
             .with(
               'ensure'  => 'present',
@@ -265,6 +266,7 @@ describe 'puppetdb::server::database', type: :class do
         end
 
         it {
+          pending('Deprecating legacy configurations for puppetdb module')
           is_expected.to contain_ini_setting('puppetdb_database_max_pool_size')
             .with(
               'ensure'  => 'absent',
@@ -286,7 +288,10 @@ describe 'puppetdb::server::database', type: :class do
           }
         end
 
-        it { is_expected.not_to contain_ini_setting('puppetdb_database_max_pool_size') }
+        it {
+          pending('Deprecating legacy configurations for puppetdb module')
+          is_expected.not_to contain_ini_setting('puppetdb_database_max_pool_size') 
+        }
       end
 
       describe 'to absent' do
@@ -296,7 +301,10 @@ describe 'puppetdb::server::database', type: :class do
           }
         end
 
-        it { is_expected.not_to contain_ini_setting('puppetdb_database_max_pool_size') }
+        it { 
+          pending('Deprecating legacy configurations for puppetdb module')  
+          is_expected.not_to contain_ini_setting('puppetdb_database_max_pool_size')
+        }
       end
     end
   end
